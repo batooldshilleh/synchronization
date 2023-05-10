@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class App {
+
     private static int shared_mem = 0;
 
     public static void main(String[] args) throws InterruptedException {
@@ -12,7 +13,7 @@ public class App {
                 @Override
                 public void run() {
                     for (int i = 0; i < N; i++) {
-
+                        //System.out.println("I am thread #"+ Thread.currentThread().getId() +" about to go to sleep for"+Thread.currentThread().getId() % 10+ " nanoseconds");
                     long sleepTime = Thread.currentThread().getId() % 10;
                     try {
                         Thread.sleep(sleepTime);
@@ -20,7 +21,9 @@ public class App {
                         e.printStackTrace();
                     }
                     synchronized (App.class) {
+                        System.out.println("I am thread #"+Thread.currentThread().getId()+" about to increment the counter, old value was" + shared_mem );
                         shared_mem++;
+                        System.out.println("I am thread #"+Thread.currentThread().getId()+" finished incrementing the counter, new value is"+ shared_mem);
                     }
                 }
                 }
